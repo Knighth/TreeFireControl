@@ -1,0 +1,6 @@
+TreeFireControl change log
+
+
+Build 1.6.0-f4 _Build 001 (Dec 8th 2016)
+----------------------------
+- Initial release.
