@@ -26,7 +26,7 @@ namespace TreeFireControl
                 {
                     return false;
                 }
-
+                TreeFireControl_Loader.FireStats.totalburncalls ++;
                 //our additions
                 if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 2)
                 { Logger.dbgLog(string.Format("ratetree:{0} ratedistree:{1} fireIntensity:{2}", Mod.config.TreeFireSpreadRate.ToString(), Mod.config.TreeFireDisasterSpreadRate.ToString(), fireIntensity.ToString())); }
@@ -34,36 +34,52 @@ namespace TreeFireControl
                 
                 if (group != null)
                 {
-                    if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 2)
+                    ushort disaster = group.m_ownerInstance.Disaster;
+                    if (disaster != 0)
                     {
-                        Logger.dbgLog("burn req is connected to disaster");
-                    }
-                    if (TreeFireControl.TFCTreeManager.Utils.ShouldWeBurnit(ref group, Mod.config.TreeFireDisasterSpreadRate))
-                    {
-                        //do nothing == burn tree.
-
-                        //org co code to count trees
-                        ushort disaster = group.m_ownerInstance.Disaster;
-                        if (disaster != 0)
+                        if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 2)
                         {
-                            Singleton<DisasterManager>.instance.m_disasters.m_buffer[disaster].m_treeFireCount = Singleton<DisasterManager>.instance.m_disasters.m_buffer[disaster].m_treeFireCount + 1;
+                            Logger.dbgLog("burn req is connected to disaster");
                         }
-                        //end org
+                        TreeFireControl_Loader.FireStats.totalburncallsdisaster++;
+                        if (TreeFireControl.TFCTreeManager.Utils.ShouldWeBurnit(ref group, Mod.config.TreeFireDisasterSpreadRate))
+                        {
+                            //do nothing == burn tree. and count it toward disaster. 
+                                Singleton<DisasterManager>.instance.m_disasters.m_buffer[disaster].m_treeFireCount = Singleton<DisasterManager>.instance.m_disasters.m_buffer[disaster].m_treeFireCount + 1;
+                            //end org
+                        }
+                        else
+                        {
+                            //retruned false - block the burn call. 
+                            TreeFireControl_Loader.FireStats.totalburncallsblockeddisaster ++;
+                            return false;
+                        }
                     }
-                    else 
+                    else //Was not null but not a valid disaster id. handle like normal. 
                     {
-                        //retruned false - block the burn call. 
-                        return false;
+                        if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 2)
+                        {
+                            Logger.dbgLog("burn req is *not* connected to disaster.");
+                        }
+                        TreeFireControl_Loader.FireStats.totalburncallsnormal ++;
+                        if (!TreeFireControl.TFCTreeManager.Utils.ShouldWeBurnit(ref group, Mod.config.TreeFireSpreadRate))
+                        {
+                            TreeFireControl_Loader.FireStats.totalburncallsblockednormal++;
+                            return false; //no burning. //else let it continue and burn the tree
+                        }
                     }
+
                 }
                 else //not tied to disasters.
                 {
-                    if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 1)
+                    if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 2)
                     {
-                        Logger.dbgLog("burn req is *not* connected to disaster.");
+                        Logger.dbgLog("burn req is *not* connected to disaster. group null");
                     }
+                    TreeFireControl_Loader.FireStats.totalburncallsnormal++;
                     if (!TreeFireControl.TFCTreeManager.Utils.ShouldWeBurnit(ref group, Mod.config.TreeFireSpreadRate))
-                    { 
+                    {
+                        TreeFireControl_Loader.FireStats.totalburncallsblockednormal++;
                         return false; //no burning. //else let it continue
                     }
                     //burnlog;
@@ -108,12 +124,15 @@ namespace TreeFireControl
                     }
 
                     //Allow for\game or user to still "start" the first tree burning of a disaster so long as we're not disabled.
-                    ushort disaster = group.m_ownerInstance.Disaster;
-                    if (disaster != 0)
+                    if (group != null)
                     {
-                        if (Singleton<DisasterManager>.instance.m_disasters.m_buffer[disaster].m_treeFireCount < 1)
+                        ushort disaster = group.m_ownerInstance.Disaster;
+                        if (disaster != 0)
                         {
-                            return true;  //allow the very first tree to burn.
+                            if (Singleton<DisasterManager>.instance.m_disasters.m_buffer[disaster].m_treeFireCount < 1)
+                            {
+                                return true;  //allow the very first tree to burn.
+                            }
                         }
                     }
 

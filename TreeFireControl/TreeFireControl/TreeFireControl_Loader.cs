@@ -18,9 +18,10 @@ namespace TreeFireControl
         //public static UIView parentGuiView;     //this holds our refference to the game main UIView object.
         //public static TreeFireControlGUI guiPanel;  //this holds our refference to our actual gui object.
         internal static bool isGuiRunning = false; //this var is set to know if our gui is actually running\is setup
-       
-        internal static LoadMode CurrentLoadMode; 
-
+        
+        internal static LoadMode CurrentLoadMode;
+        internal static TFCStats FireStats = new TFCStats();
+        
         public TreeFireControl_Loader() { }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace TreeFireControl
             CurrentLoadMode = mode; //save this guy for later.
             try
             {
-                if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL > 0) { Logger.dbgLog("LoadMode:" + mode.ToString()); }
+                if (Mod.DEBUG_LOG_ON) { Logger.dbgLog("LoadMode:" + mode.ToString()); }
                 
                 if (Mod.isEnabled == true)
                 {
@@ -59,6 +60,7 @@ namespace TreeFireControl
                     {
                         if (Mod.DEBUG_LOG_ON) { Logger.dbgLog("Game modes detected, setting up detours."); }
                         SettingsUI.isInGame = true;
+                        if (FireStats == null) FireStats = new TFCStats();
                         if (Singleton<LoadingManager>.instance.SupportsExpansion(Expansion.NaturalDisasters))
                         {
                             TreeFireControl.Detours.DeployRedirects(); //only deploy if user has NaturalDisasters.
@@ -68,6 +70,7 @@ namespace TreeFireControl
                             if (Singleton<BuildingManager>.exists)
                             {
                                 Singleton<BuildingManager>.instance.m_firesDisabled = true;
+                                if (Mod.DEBUG_LOG_ON) { Logger.dbgLog("BuildingManager.m_firesDisabled set to true"); }
                             }
                         }
                     }
@@ -95,6 +98,10 @@ namespace TreeFireControl
             {
                 if(Mod.isEnabled)
                 {
+                    if (FireStats != null)
+                    {
+                        FireStats.clearstats();
+                    }
                     TreeFireControl.Detours.RemoveRedirects();
                 }
                 SettingsUI.isInGame = false;
@@ -114,8 +121,16 @@ namespace TreeFireControl
         public override void OnReleased()
         {
             base.OnReleased();
-            if (Mod.DEBUG_LOG_ON) { Logger.dbgLog ("Releasing Completed."); }
+            try
+            {
+                if (Mod.DEBUG_LOG_ON) { Logger.dbgLog("Releasing Completed."); }
+            }
+            catch (Exception ex1)
+            {
+                Logger.dbgLog("Error: \r\n", ex1, true);
+            }
         }
+
 
 /*
         /// <summary>

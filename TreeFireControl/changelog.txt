@@ -1,5 +1,12 @@
 TreeFireControl change log
 
+Build 1.6.0-f4 _Build 002 12/11/2016
++ new extra options with logging turned on to see some basic stats.
++ fixed a major bug with 'normal' tree burnings where we were previously not catching
+  tress that had disaster ID's but had disasterID==0 (dummy), we used to treat that as diaster.
+  we righfully treat it as non-disaster now. Seems in 1.6 every "normal" structure fire is really a 
+  disaster...just a dummy\untracked one.
+
 
 Build 1.6.0-f4 _Build 001 (Dec 8th 2016)
 ----------------------------

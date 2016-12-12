@@ -60,13 +60,11 @@
     <Compile Include="TreeFireControl\Logger.cs" />
     <Compile Include="TreeFireControl\Mod.cs" />
     <Compile Include="TreeFireControl\SettingsUI.cs" />
+    <Compile Include="TreeFireControl\TFCStats.cs" />
     <Compile Include="TreeFireControl\TFCTreeManager.cs" />
     <Compile Include="TreeFireControl\TreeFireControl_Loader.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="TreeFireControl\changelog.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

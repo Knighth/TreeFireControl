@@ -21,9 +21,10 @@ so long as you have don't have things disabled.
 Disable normal building fires - set the global flag to disable normal building fires (existing ones still burn but no new ones will happen) 
 
 Enable logging - is more for me the developer, just logs extra stuff to your log.
+Enabling logging also enables extra information when in the game an on the screen.
+Shows how many requests there were to burn trees, and what type and how many we ignored for each type.
 
 *You may change your options In-Game at anytime, they are effective immediately.
-
 
 Special Thanks.
 Sebastian Schöner for his CitiesSkylines Detours project.

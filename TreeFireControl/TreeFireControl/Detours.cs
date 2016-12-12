@@ -99,7 +99,7 @@ namespace TreeFireControl
 
                 m_isActive = true;
                 if (Mod.DEBUG_LOG_ON) { Logger.dbgLog("Redirected calls."); }
-                if (Mod.DEBUG_LOG_ON && Mod.DEBUG_LOG_LEVEL >1) 
+                if (Mod.DEBUG_LOG_ON) 
                 {
                     foreach (var keypair in redirectDic)
                     {
@@ -109,7 +109,7 @@ namespace TreeFireControl
             }
             catch (Exception exception1)
             {
-                Logger.dbgLog("Setup error:",exception1,true);
+                Logger.dbgLog("Detour Setup error:",exception1,true);
             }
         }
 
@@ -140,7 +140,7 @@ namespace TreeFireControl
                 if (Mod.DEBUG_LOG_ON) { Logger.dbgLog("Reverted redirected calls."); }
             }
             catch (Exception exception1)
-            { Logger.dbgLog("ReverseSetup error:",exception1,true); }
+            { Logger.dbgLog("Reversing of Detours error:",exception1,true); }
         }
 
     }
