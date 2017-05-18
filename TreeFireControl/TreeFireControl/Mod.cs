@@ -12,7 +12,7 @@ namespace TreeFireControl
     {
 
         internal const string MOD_NAME = "Tree Fire Control";  //the name of your mod, make it constant in case you use it more then once.
-        internal const string MOD_VERSIONSTRING = "1.6.0-f4 Build 02";
+        internal const string MOD_VERSIONSTRING = "1.7.0-f5 Build 01";
         internal const string MOD_DESC = "Adjust rate that trees catch fire";  //keep it short.
         internal const string MOD_LOG_PREFIX = "TreeFireControl";  //This is used by the logging routine incase you want something different then MY_MODS_NAME
         internal const string MOD_CONFIGPATH = "TreeFireControl_Config.xml";

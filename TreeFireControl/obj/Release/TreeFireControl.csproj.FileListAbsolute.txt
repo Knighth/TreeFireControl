@@ -5,7 +5,7 @@ E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\ColossalManaged.dl
 E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\ICities.dll
 E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\UnityEngine.dll
 E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\Assembly-CSharp-firstpass.dll
-E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\ICSharpCode.SharpZipLib.dll
-E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\UnityEngine.xml
 E:\Projects\CSLTesting\CSLTesting\TreeFireControl\obj\Release\TreeFireControl.dll
 E:\Projects\CSLTesting\CSLTesting\TreeFireControl\obj\Release\TreeFireControl.pdb
+E:\Projects\CSLTesting\CSLTesting\TreeFireControl\bin\Release\PopsApiWrapper.dll
+E:\Projects\CSLTesting\CSLTesting\TreeFireControl\obj\Release\TreeFireControl.csprojResolveAssemblyReference.cache
